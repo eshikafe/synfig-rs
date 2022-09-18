@@ -1,9 +1,14 @@
+// Reference files:
+// https://github.com/synfig/synfig/blob/master/synfig-core/src/synfig/loadcanvas.cpp
+// https://github.com/synfig/synfig/blob/master/synfig-core/src/synfig/loadcanvas.h
+
 #![allow(dead_code)]
 #![allow(unused_variables)]
 
 use crate::lazy_static::lazy_static;
 use std::collections::HashMap;
 use std::sync::Mutex;
+use log::{error, warn};
 
 type OpenCanvasMap = HashMap<i32, String>;
 
@@ -26,11 +31,15 @@ pub struct CanvasParser {
     warnings_text: String,
     guid: String, // GUID
     in_bones_section: bool,
+
+    // Set of absolute file names of the canvases currently being parsed
+    pub loading: Vec<i32>,
 }
 
 impl CanvasParser {
     // Constructor
     pub fn new() -> Self {
+        env_logger::init();
         let mut instance: Self = Default::default();
         instance.max_warnings = 1000;
         instance
@@ -91,9 +100,22 @@ impl CanvasParser {
 
     // Parse a canvas from a file with absolute path
     pub fn parse_from_file_as(&self, identifier: i32, abs_path: String, errors: String) -> i32 {
+        // TODO: Implement this function
         0
     }
 
     // Parse a Canvas from a xmlpp root node
-    // pub fn parse_as(&self, node: xmlpp::Element, errors: String) -> i32 {}
+    pub fn parse_as(&self, node: i32, errors: String) -> i32 {
+       // TODO: Implement this function 
+        0
+    }
+
+    // Error handling function
+    pub fn error(&mut self, element: i32, text: String) {
+        let err = format!("{}:<{}>:{}: error: {}", self.filename, element,element, text);
+        self.total_errors += 1;
+        if self.allow_errors {
+            error!("{}",err);
+        }
+    }
 }

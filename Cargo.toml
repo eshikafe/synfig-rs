@@ -1,5 +1,5 @@
 [package]
-name = "synfig-rs"
+name = "synfig"
 version = "0.1.0"
 edition = "2021"
 
@@ -10,3 +10,5 @@ path = "src/bin/loadcanvas-test.rs"
 
 [dependencies]
 lazy_static = "1.4.0"
+log = "0.4.17"
+env_logger = "0.9.1"
