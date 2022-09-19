@@ -111,11 +111,29 @@ impl CanvasParser {
     }
 
     // Error handling function
-    pub fn error(&mut self, element: i32, text: String) {
+    // TODO: Use type xmlpp::Node for element
+    pub fn error(&mut self, element: i32, text: String) { 
         let err = format!("{}:<{}>:{}: error: {}", self.filename, element,element, text);
         self.total_errors += 1;
         if self.allow_errors {
             error!("{}",err);
         }
     }
+
+    fn fatal_error(&self, element: i32, text: String) {
+        let err = format!("{}:<{}>:{}: error: {}", self.filename, element,element, text);
+        error!("{}",err);
+    }
+
+    pub fn warning(&mut self, element: i32, text: String) {
+        let msg = format!("{}:<{}>:{}: {}",self.filename,element,element,text);
+        warn!("{}", msg);
+
+        self.total_warnings += 1;
+        self.warnings_text = format!("{} * {} \n", self.warnings_text, msg);
+        if self.total_warnings >= self.max_warnings {
+            self.fatal_error(element, "Too many warnings".to_string());
+        }
+    }
+
 }
