@@ -6,9 +6,9 @@
 #![allow(unused_variables)]
 
 use crate::lazy_static::lazy_static;
+use log::{error, warn};
 use std::collections::HashMap;
 use std::sync::Mutex;
-use log::{error, warn};
 
 type OpenCanvasMap = HashMap<i32, String>;
 
@@ -19,7 +19,6 @@ lazy_static! {
     });
 }
 
-#[derive(Default)]
 pub struct CanvasParser {
     max_warnings: i32,
     total_warnings: i32,
@@ -31,18 +30,31 @@ pub struct CanvasParser {
     warnings_text: String,
     guid: String, // GUID
     in_bones_section: bool,
-
     // Set of absolute file names of the canvases currently being parsed
     pub loading: Vec<i32>,
 }
 
+impl Default for CanvasParser {
+    fn default() -> Self {
+        Self {
+            max_warnings: 1000,
+            total_warnings: 0,
+            total_errors: 0,
+            allow_errors: false,
+            filename: String::from(""),
+            path: String::from(""),
+            errors_text: String::from(""),
+            warnings_text: String::from(""),
+            guid: String::from(""),
+            in_bones_section: false,
+            loading: vec![0],
+        }
+    }
+}
+
 impl CanvasParser {
-    // Constructor
     pub fn new() -> Self {
-        env_logger::init();
-        let mut instance: Self = Default::default();
-        instance.max_warnings = 1000;
-        instance
+        Default::default()
     }
 
     // public:
@@ -106,27 +118,33 @@ impl CanvasParser {
 
     // Parse a Canvas from a xmlpp root node
     pub fn parse_as(&self, node: i32, errors: String) -> i32 {
-       // TODO: Implement this function 
+        // TODO: Implement this function
         0
     }
 
     // Error handling function
     // TODO: Use type xmlpp::Node for element
-    pub fn error(&mut self, element: i32, text: String) { 
-        let err = format!("{}:<{}>:{}: error: {}", self.filename, element,element, text);
+    pub fn error(&mut self, element: i32, text: String) {
+        let err = format!(
+            "{}:<{}>:{}: error: {}",
+            self.filename, element, element, text
+        );
         self.total_errors += 1;
         if self.allow_errors {
-            error!("{}",err);
+            error!("{}", err);
         }
     }
 
     fn fatal_error(&self, element: i32, text: String) {
-        let err = format!("{}:<{}>:{}: error: {}", self.filename, element,element, text);
-        error!("{}",err);
+        let err = format!(
+            "{}:<{}>:{}: error: {}",
+            self.filename, element, element, text
+        );
+        error!("{}", err);
     }
 
     pub fn warning(&mut self, element: i32, text: String) {
-        let msg = format!("{}:<{}>:{}: {}",self.filename,element,element,text);
+        let msg = format!("{}:<{}>:{}: {}", self.filename, element, element, text);
         warn!("{}", msg);
 
         self.total_warnings += 1;
@@ -135,5 +153,4 @@ impl CanvasParser {
             self.fatal_error(element, "Too many warnings".to_string());
         }
     }
-
 }

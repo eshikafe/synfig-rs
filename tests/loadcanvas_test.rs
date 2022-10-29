@@ -1,7 +1,8 @@
 use synfig::loadcanvas::*;
 
 #[test]
-fn run() {
+fn load_canvas_methods() {
+    env_logger::init();
     // Test canvas data structure
     let mut canvas = CanvasParser::new();
 
