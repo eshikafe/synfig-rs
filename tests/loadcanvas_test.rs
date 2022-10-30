@@ -1,4 +1,5 @@
 use synfig::loadcanvas::*;
+use synfig::version::*;
 
 #[test]
 fn load_canvas_methods() {
@@ -18,4 +19,12 @@ fn load_canvas_methods() {
     assert_eq!(1, canvas.error_count());
 
     canvas.warning(98, "attribute unknown".to_string());
+}
+
+#[test]
+fn version_test() {
+    assert_eq!(true, synfig_check_version());
+
+    println!("Synfig version: {}",get_version());
+    println!("Synfig build info: {}", get_build_date());
 }
