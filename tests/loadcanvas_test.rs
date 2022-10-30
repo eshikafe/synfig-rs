@@ -1,5 +1,4 @@
-use synfig::loadcanvas::*;
-use synfig::version::*;
+use synfig_core::{loadcanvas::*, version::*};
 
 #[test]
 fn load_canvas_methods() {
