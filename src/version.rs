@@ -1,10 +1,15 @@
 use log::error;
 use std::mem;
 
+use crate::canvas::Canvas;
+use crate::color::Color;
+use crate::layer::Layer;
+use crate::vector::Vector;
+
 // SYNFIG_VERSION
 // Synfig API Version
 //
-//	The macro SYNFIG_VERSION can be set to ensure
+//	SYNFIG_VERSION can be set to ensure
 //	compile-time compatibility with future versions
 //	of Synfig. The first two digits are the major
 //	version, the second two digits are the minor
@@ -19,11 +24,6 @@ pub const SYNFIG_VERSION: &str = "01.04.00";
 // that breaks library compatibility
 pub const SYNFIG_LIBRARY_VERSION: usize = 50;
 
-use crate::canvas::Canvas;
-use crate::color::Color;
-use crate::layer::Layer;
-use crate::vector::Vector;
-
 pub fn synfig_check_version() -> bool {
     check_version_(
         SYNFIG_LIBRARY_VERSION,
@@ -34,11 +34,11 @@ pub fn synfig_check_version() -> bool {
     )
 }
 
-// Version checker \internal
+// Version checker
 // Checks to make sure that the library
 // version matches with what the program
 // was compiled against.
-// see SYNFIG_CHECK_VERSION()
+// see synfig_check_version()
 
 fn check_version_(
     version: usize,
@@ -97,5 +97,5 @@ pub fn get_version() -> &'static str {
 }
 
 pub fn get_build_date() -> String {
-    String::from("Unknown")
+    String::from("build date")
 }
