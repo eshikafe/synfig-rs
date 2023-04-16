@@ -15,7 +15,7 @@ impl Color {
         self.r
     }
 
-    pub fn set_r(&mut self, x:f64) -> & mut Self {
+    pub fn set_r(&mut self, x:f64) -> &mut Self {
         self.r = x;
         self
     }
