@@ -180,7 +180,7 @@ impl CanvasParser {
 	fn error_unexpected_element(&mut self, node: xmlpp::Node, got: String, expected: String) {}
 	
     // Unexpected element error handling function
-	fn error_unexpected_element(&mut self, nodexmlpp::Node, got: String) {}
+	fn error_unexpected_element(&mut self, node: nodexmlpp::Node, got: String) {}
 
 	// Canvas Parsing Function
 	fn parse_canvas(&mut self, node: &xmlpp::Element, parent: Canvas::Handle, inline_: bool, identifier: &FileSystem::Identifier, path: String) -> Canvas::Handle {
@@ -234,7 +234,9 @@ impl CanvasParser {
     }
 	
     // Angle Value Base Parsing Function
-	Angle parse_angle(&mut self,  node: &xmlpp::Element);
+	fn parse_angle(&mut self,  node: &xmlpp::Element) -> Angle {
+        0
+    }
 	
     // String Value Base Parsing Function
 	fn parse_string(&mut self,  node: &xmlpp::Element) -> String {
