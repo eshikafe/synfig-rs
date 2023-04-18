@@ -1,16 +1,19 @@
-
-
 #![allow(dead_code)]
 #![allow(unused_variables)]
 
 use crate::lazy_static::lazy_static;
+use guid_create::GUID;
 use log::{error, warn};
 use std::collections::HashMap;
 use std::sync::Mutex;
-use guid::GUID;
 
-use crate::canvas::Canvas;
-use crate::color::Color;
+use crate::canvas;
+use crate::color::*;
+use crate::valuenode;
+use crate::Real;
+use crate::time::Time;
+use crate::vector::*;
+use crate::segment::Segment;
 
 type OpenCanvasMap = HashMap<i32, String>;
 
@@ -22,8 +25,11 @@ lazy_static! {
 }
 
 mod xmlpp {
-    struct Node;
-    struct Element;
+    #[derive(Debug)]
+    pub struct Node;
+
+    #[derive(Debug)]
+    pub struct Element;
 }
 
 /// CanvasParser handles xmlpp elements from a sif file and
@@ -57,7 +63,7 @@ impl Default for CanvasParser {
             path: String::from(""),
             errors_text: String::from(""),
             warnings_text: String::from(""),
-            guid: String::from(""),
+            guid: GUID::rand(),
             in_bones_section: false,
             loading: vec![0],
         }
@@ -130,7 +136,7 @@ impl CanvasParser {
     }
 
     // Parse a canvas from a file with absolute path
-    // Returns Canvas::Handle
+    // Returns canvas::Handle
     pub fn parse_from_file_as(&self, identifier: i32, abs_path: String, errors: String) -> i32 {
         // TODO: Implement this function
         0
@@ -143,10 +149,9 @@ impl CanvasParser {
     }
 
     // Error handling function
-    // TODO: Use type xmlpp::Node for element
-    pub fn error(&mut self, element: i32, text: String) {
+    pub fn error(&mut self, element: xmlpp::Node, text: String) {
         let err = format!(
-            "{}:<{}>:{}: error: {}",
+            "{}:<{:?}>:{:?}: error: {}",
             self.filename, element, element, text
         );
         self.total_errors += 1;
@@ -177,158 +182,206 @@ impl CanvasParser {
     }
 
     // Unexpected element error handling function
-	fn error_unexpected_element(&mut self, node: xmlpp::Node, got: String, expected: String) {}
-	
-    // Unexpected element error handling function
-	fn error_unexpected_element(&mut self, node: nodexmlpp::Node, got: String) {}
+    fn error_unexpected_element(&mut self, node: xmlpp::Node, got: String, expected: String) {}
 
-	// Canvas Parsing Function
-	fn parse_canvas(&mut self, node: &xmlpp::Element, parent: Canvas::Handle, inline_: bool, identifier: &FileSystem::Identifier, path: String) -> Canvas::Handle {
-        parent = 0;
-        inline_ = false;
+    // Canvas Parsing Function
+    fn parse_canvas(
+        &mut self,
+        node: &xmlpp::Element,
+        parent: canvas::Handle,
+        inline_: bool,
+        identifier: &FileSystem::Identifier,
+        path: String,
+    ) -> canvas::Handle {
+        // parent = 0;
+        // inline_ = false;
         // identifier = = FileSystemNative::instance()->get_identifier(std::string());
-        path = String::from(".");
+        // path = String::from(".");
+        0 
     }
-	
+
     // Canvas definitions Parsing Function (exported value nodes and exported canvases)
-	fn parse_canvas_defs(&mut self,  node: &xmlpp::Element, canvas: Canvas::Handle) {}
+    fn parse_canvas_defs(&mut self, node: &xmlpp::Element, canvas: canvas::Handle) {}
 
-	fn parse_canvas_bones(&mut self, node: &xmlpp::Element, canvas: Canvas::Handle) -> Vec<ValueNode::Handle> {}
+    fn parse_canvas_bones(
+        &mut self,
+        node: &xmlpp::Element,
+        canvas: canvas::Handle,
+    ) -> Vec<valuenode::Handle> {
+        vec![0]
+    }
 
-	// Layer Parsing Function
-	fn parse_layer(&mut self, node: &xmlpp::Element, canvas: Canvas::Handle) -> etl::handle<Layer> {}
-	
+    // Layer Parsing Function
+    fn parse_layer(&mut self, node: &xmlpp::Element, canvas: canvas::Handle) -> etl::handle<Layer> {
+    }
+
     // Generic Value Base Parsing Function
-	fn parse_value(&mut self,  node: &xmlpp::Element, canvas: Canvas::Handle) -> ValueBase {
+    fn parse_value(&mut self, node: &xmlpp::Element, canvas: canvas::Handle) -> ValueBase {
         0
     }
-	
+
     // Generic Value Node Parsing Function
-	fn parse_value_node(&mut self,  node: &xmlpp::Element, canvas: Canvas::Handle) -> ValueNode::Handle {
+    fn parse_value_node(
+        &mut self,
+        node: &xmlpp::Element,
+        canvas: canvas::Handle
+    ) -> valuenode::Handle {
         0
     }
 
-	// Real Value Base Parsing Function
-	fn parse_real(&mut self,  node: &xmlpp::Element) -> Real {
-        0
+    // Real Value Base Parsing Function
+    fn parse_real(&mut self, node: &xmlpp::Element) -> Real {
+        0.0
     }
-	
+
     // Time Value Base Parsing Function
-	fn parse_time(&mut self,  node: &xmlpp::Element, canvas: Canvas::Handles) -> Time {
-        0
+    fn parse_time(&mut self, node: &xmlpp::Element, canvas: canvas::Handle) -> Time {
+        Time::new()
     }
-	
+
     // Integer Value Base Parsing Function
-	fn parse_integer(&mut self, node: &xmlpp::Element) -> i32 {
+    fn parse_integer(&mut self, node: &xmlpp::Element) -> i32 {
         0
     }
 
-	// Vector Value Base Parsing Function
-	fn parse_vector(&mut self,  node: &xmlpp::Element) -> Vector {
-        0
+    // Vector Value Base Parsing Function
+    fn parse_vector(&mut self, node: &xmlpp::Element) -> Vector {
+        Vector{x: 0.0, y:0.0}
     }
 
-	// Color Value Base Parsing Function
-	fn parse_color(&mut self,  node: &xmlpp::Element) -> Color {
-        0
+    // Color Value Base Parsing Function
+    fn parse_color(&mut self, node: &xmlpp::Element) -> Color {
+        Color {
+            r: 0.1,
+            g: 2.4,
+            b: 22.0,
+            a: 1.0,
+        }
     }
-	
+
     // Angle Value Base Parsing Function
-	fn parse_angle(&mut self,  node: &xmlpp::Element) -> Angle {
+    fn parse_angle(&mut self, node: &xmlpp::Element) -> Angle {
         0
     }
-	
+
     // String Value Base Parsing Function
-	fn parse_string(&mut self,  node: &xmlpp::Element) -> String {
+    fn parse_string(&mut self, node: &xmlpp::Element) -> String {
         String::from("todo")
     }
-	
+
     // Bool Value Base Parsing Function
-	fn parse_bool(&mut self,  node: &xmlpp::Element) -> bool {
+    fn parse_bool(&mut self, node: &xmlpp::Element) -> bool {
         false
     }
-	
+
     // Segment Value Base Parsing Function
-	fn parse_segment(&mut self,  node: &xmlpp::Element) -> Segment {
+    fn parse_segment(&mut self, node: &xmlpp::Element) -> Segment {
         0
     }
-	
+
     // List Value Base Parsing Function
-	fn parse_list(&mut self, node: &xmlpp::Element, canvas: Canvas::Handle) -> ValueBase {
+    fn parse_list(&mut self, node: &xmlpp::Element, canvas: canvas::Handle) -> ValueBase {
         0
+
     }
-	
+
     // Weighted Value Base Parsing Function
-	fn parse_weighted_value(&mut self, node: &xmlpp::Element,  _type: &types_namespace::TypeWeightedValueBase,  canvas: Canvas::Handle) -> ValueBase {
+    fn parse_weighted_value(
+        &mut self,
+        node: &xmlpp::Element,
+        _type: &types_namespace::TypeWeightedValueBase,
+        canvas: canvas::Handle,
+    ) -> ValueBase {
         0
     }
-	
+
     // Pair Value Base Parsing Function
-	fn parse_pair(&mut self, node: &xmlpp::Element, _type: &types_namespace::TypePairBase, canvas: Canvas::Handle) -> ValueBase {
+    fn parse_pair(
+        &mut self,
+        node: &xmlpp::Element,
+        _type: &types_namespace::TypePairBase,
+        canvas: canvas::Handle,
+    ) -> ValueBase {
         0
     }
-	
+
     // Gradient Value Base Parsing Function
-	fn parse_gradient(&mut self, node: &xmlpp::Element) -> Gradient {
+    fn parse_gradient(&mut self, node: &xmlpp::Element) -> Gradient {
         0
     }
-	
+
     // Bline Point Value Base Parsing Function
-	fn parse_bline_point(&mut self, node: &xmlpp::Element) -> BLinePoint {
+    fn parse_bline_point(&mut self, node: &xmlpp::Element) -> BLinePoint {
         0
     }
-	
+
     // Transformation Value Base Parsing Function
-	fn parse_transformation(&mut self, node: &xmlpp::Element) -> Transformation {
+    fn parse_transformation(&mut self, node: &xmlpp::Element) -> Transformation {
         0
     }
 
-	fn parse_guid(&mut self, node: &xmlpp::Element) -> GUID {
+    fn parse_guid(&mut self, node: &xmlpp::Element) -> GUID {
+        self.guid
+    }
+
+    /// Width Point Value Base Parsing Function
+    fn parse_width_point(&mut self, node: &xmlpp::Element) -> WidthPoint {
         0
     }
 
-	//! Width Point Value Base Parsing Function
-	fn parse_width_point(&mut self, node: &xmlpp::Element) -> WidthPoint {
+    // Dash Item Value Base Parsing Function
+    fn parse_dash_item(&mut self, node: &xmlpp::Element) -> DashItem {
         0
     }
 
-	// Dash Item Value Base Parsing Function
-	fn parse_dash_item(&mut self, node: &xmlpp::Element) -> DashItem {
+    // Keyframe Parsing Function
+    fn parse_keyframe(&mut self, node: &xmlpp::Element, canvas: canvas::Handle) -> Keyframe {
         0
     }
 
-	// Keyframe Parsing Function
-	fn parse_keyframe(&mut self, node: &xmlpp::Element, canvas: Canvas::Handle) -> Keyframe {
+    // ValueNode Animated Parsing Function
+    fn parse_animated(
+        &mut self,
+        node: &xmlpp::Element,
+        canvas: canvas::Handle,
+    ) -> etl::handle<ValueNode_Animated> {
         0
     }
 
-	// ValueNode Animated Parsing Function
-	fn parse_animated(&mut self, node: &xmlpp::Element, canvas: Canvas::Handle) -> etl::handle<ValueNode_Animated> {
-        0
-    }
-	
     // Linkable ValueNode Parsing Function
-	fn parse_linkable_value_node(&mut self, node: &xmlpp::Element, canvas: Canvas::Handle) -> etl::handle<LinkableValueNode> {
+    fn parse_linkable_value_node(
+        &mut self,
+        node: &xmlpp::Element,
+        canvas: canvas::Handle,
+    ) -> etl::handle<LinkableValueNode> {
         0
     }
 
-	// Static List Parsnig Function
-	fn parse_static_list(&mut self, node: &xmlpp::Element, canvas: Canvas::Handle) -> etl::handle<ValueNode_StaticList> {
+    // Static List Parsnig Function
+    fn parse_static_list(
+        &mut self,
+        node: &xmlpp::Element,
+        canvas: canvas::Handle,
+    ) -> etl::handle<ValueNode_StaticList> {
         0
     }
 
-	// Dynamic List Parsnig Function
-	fn parse_dynamic_list(&mut self, node: &xmlpp::Element, canvas: Canvas::Handle) -> etl::handle<ValueNode_DynamicList> {
+    // Dynamic List Parsnig Function
+    fn parse_dynamic_list(
+        &mut self,
+        node: &xmlpp::Element,
+        canvas: canvas::Handle,
+    ) -> etl::handle<ValueNode_DynamicList> {
         0
     }
 
-	// Interpolation option for ValueBase parsing function
-	fn parse_interpolation(&mut self, node: &xmlpp::Element, attribute: String) -> Interpolation {
+    // Interpolation option for ValueBase parsing function
+    fn parse_interpolation(&mut self, node: &xmlpp::Element, attribute: String) -> Interpolation {
         0
     }
-	
+
     // Static option for ValueBase parsing function
-	fn parse_static(&mut self, node: &xmlpp::Element) -> bool {
+    fn parse_static(&mut self, node: &xmlpp::Element) -> bool {
         false
     }
 }
