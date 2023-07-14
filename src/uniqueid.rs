@@ -1,6 +1,6 @@
 static mut uniqueid_pool: i32 = 0;
 
-#[derive(PartialEq, PartialOrd)]
+#[derive(Debug, PartialEq, PartialOrd)]
 pub struct UniqueID
 {
 	id: i32,
