@@ -1,12 +1,13 @@
 #![allow(dead_code)]
 #![allow(unused_variables)]
 
-use crate::lazy_static::lazy_static;
+// use crate::lazy_static::lazy_static;
 use guid_create::GUID;
 use log::{error, warn};
 use std::collections::HashMap;
 use std::sync::Mutex;
 
+use lazy_static::lazy_static;
 use crate::canvas;
 use crate::color::*;
 use crate::valuenode;
@@ -14,6 +15,7 @@ use crate::Real;
 use crate::time::Time;
 use crate::vector::*;
 use crate::segment::Segment;
+use crate::layer::*;
 
 type OpenCanvasMap = HashMap<i32, String>;
 
@@ -212,7 +214,12 @@ impl CanvasParser {
     }
 
     // Layer Parsing Function
-    fn parse_layer(&mut self, node: &xmlpp::Element, canvas: canvas::Handle) -> etl::handle<Layer> {
+    // todo -> etl::handle<Layer>
+    fn parse_layer(&mut self, node: &xmlpp::Element, canvas: canvas::Handle) -> Vec<Layer> {
+        vec![Layer{active: false, optimized: false, exclude_from_rendering: false,
+            description: String::from(""),
+            group: String::from(""),
+        }]
     }
 
     // Generic Value Base Parsing Function
@@ -282,7 +289,6 @@ impl CanvasParser {
     // List Value Base Parsing Function
     fn parse_list(&mut self, node: &xmlpp::Element, canvas: canvas::Handle) -> ValueBase {
         0
-
     }
 
     // Weighted Value Base Parsing Function
