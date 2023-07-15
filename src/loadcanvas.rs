@@ -17,6 +17,8 @@ use crate::vector::*;
 use crate::segment::Segment;
 use crate::layer::*;
 
+// Returns the Open Canvases Map.
+// using OpenCanvasMap = std::map<Canvas::LooseHandle, std::string>;
 type OpenCanvasMap = HashMap<i32, String>;
 
 lazy_static! {

@@ -4,56 +4,56 @@ pub const CURRENT_CANVAS_VERSION: &str = "1.2";
 
 pub struct Canvas {
     // Contains the ID string for the Canvas
-	//	\see get_id(), set_id() */
+	//	see get_id(), set_id() 
 	id_: String,
 
 	// Contains the name of the Canvas
-	//	\see set_name(), get_name() */
+	//	see set_name(), get_name()
 	name_: String,
 
 	// Contains a description of the Canvas
-	//	\see set_description(), get_description() */
+	//	see set_description(), get_description()
 	description_: String,
 
 	// Contains the canvas' version string
-	//	\see set_version(), get_version() */
+	//	see set_version(), get_version() 
 	version_: String,
 
 	// Contains the author's name
-	//	\see set_author(), get_author() */
+	//	see set_author(), get_author()
 	 author_: String,
 
 	// File name of Canvas
-	// \see get_file_name(), set_file_name() */
+	// see get_file_name(), set_file_name()
 	file_name_: String,
 
 	// File identifier of Canvas
-	// \see get_identifier(), set_identifier() */
+	// see get_identifier(), set_identifier()
 	// identifier_FileSystem::Identifier,
 
 	// Metadata map for Canvas.
-	// \see get_meta_data(), set_meta_data(), erase_meta_data() */
+	// see get_meta_data(), set_meta_data(), erase_meta_data()
 	meta_data_: HashMap<String, String>,
 
 	// Contains a list of ValueNodes that are in this Canvas
-	//	\see value_node_list(), find_value_node() */
+	//	see value_node_list(), find_value_node()
 	//  value_node_list_ValueNodeList,
 
 	// Contains a list of Keyframes that are in the Canvas
-	// \see keyframe_list()*/
+	// see keyframe_list()
 	// keyframe_list_: KeyframeList,
 
 	// A handle to the parent canvas of this canvas.
 	//	If canvas is a root canvas, then this handle is empty
-	//	\see parent()
+	//	see parent()
 	// parent_LooseHandle,
 
 	// List containing any child Canvases
-	//	\see children() */
+	//	see children() */
 	// children_: Children,
 
 	// Render Description for Canvas
-	//	\see rend_desc() */
+	//	see rend_desc() */
 	// RendDesc desc_;
 
 	// Contains the value of the last call to set_time()
@@ -83,3 +83,7 @@ pub struct Canvas {
 }
 
 pub type Handle = i32;
+pub type LooseHandle = i32;
+pub type ConstHandle = i32;
+
+pub type Children = Vec<Handle>;

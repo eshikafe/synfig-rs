@@ -1,4 +1,4 @@
-static mut uniqueid_pool: i32 = 0;
+static mut UNIQUEID_POOL: i32 = 0;
 
 #[derive(Debug, PartialEq, PartialOrd)]
 pub struct UniqueID
@@ -46,8 +46,8 @@ impl UniqueID {
 
     fn next_id(&self) -> i32 {
         unsafe {
-        uniqueid_pool += 1;
-        uniqueid_pool
+            UNIQUEID_POOL += 1;
+            UNIQUEID_POOL
         }
     }
 }
