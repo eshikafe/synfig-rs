@@ -13,4 +13,5 @@ members = ["synfig-core"]
 [dependencies]
 synfig-core = {path = "synfig-core", version = "0.1.0"}
 env_logger = "0.9.1"
+log = "0.4.17"
 
