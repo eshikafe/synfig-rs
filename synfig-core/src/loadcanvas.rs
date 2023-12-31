@@ -29,8 +29,7 @@ lazy_static! {
 
 // TODO: Replace with a quick_xml crate
 mod xmlpp {
-    #[derive(Debug)]
-    pub struct Node;
+    pub type Node = i32;
 
     #[derive(Debug)]
     pub struct Element;
@@ -190,7 +189,7 @@ impl CanvasParser {
         node: &xmlpp::Element,
         parent: canvas::Handle,
         inline_: bool,
-        identifier: &FileSystem::Identifier,
+        //identifier: &FileSystem::Identifier,
         path: String,
     ) -> canvas::Handle {
         // parent = 0;
@@ -221,7 +220,7 @@ impl CanvasParser {
     }
 
     // Generic Value Base Parsing Function
-    fn parse_value(&mut self, node: &xmlpp::Element, canvas: canvas::Handle) -> ValueBase {
+    fn parse_value(&mut self, node: &xmlpp::Element, canvas: canvas::Handle) -> i32 /* ValueBase */ {
         0
     }
 
@@ -265,7 +264,7 @@ impl CanvasParser {
     }
 
     // Angle Value Base Parsing Function
-    fn parse_angle(&mut self, node: &xmlpp::Element) -> Angle {
+    fn parse_angle(&mut self, node: &xmlpp::Element) -> i32 /* Angle */ {
         0
     }
 
@@ -280,12 +279,12 @@ impl CanvasParser {
     }
 
     // Segment Value Base Parsing Function
-    fn parse_segment(&mut self, node: &xmlpp::Element) -> Segment {
+    fn parse_segment(&mut self, node: &xmlpp::Element) -> i32 /* Segment */ {
         0
     }
 
     // List Value Base Parsing Function
-    fn parse_list(&mut self, node: &xmlpp::Element, canvas: canvas::Handle) -> ValueBase {
+    fn parse_list(&mut self, node: &xmlpp::Element, canvas: canvas::Handle) -> i32 /* ValueBase */ {
         0
     }
 
@@ -293,9 +292,9 @@ impl CanvasParser {
     fn parse_weighted_value(
         &mut self,
         node: &xmlpp::Element,
-        _type: &types_namespace::TypeWeightedValueBase,
+        // _type: &types_namespace::TypeWeightedValueBase,
         canvas: canvas::Handle,
-    ) -> ValueBase {
+    ) -> i32 /* ValueBase */ {
         0
     }
 
@@ -303,24 +302,24 @@ impl CanvasParser {
     fn parse_pair(
         &mut self,
         node: &xmlpp::Element,
-        _type: &types_namespace::TypePairBase,
+       // _type: &types_namespace::TypePairBase,
         canvas: canvas::Handle,
-    ) -> ValueBase {
+    ) -> i32 /* ValueBase */ {
         0
     }
 
     // Gradient Value Base Parsing Function
-    fn parse_gradient(&mut self, node: &xmlpp::Element) -> Gradient {
+    fn parse_gradient(&mut self, node: &xmlpp::Element) -> i32 /* Gradient */ {
         0
     }
 
     // Bline Point Value Base Parsing Function
-    fn parse_bline_point(&mut self, node: &xmlpp::Element) -> BLinePoint {
+    fn parse_bline_point(&mut self, node: &xmlpp::Element) -> i32 /* BLinePoint */ {
         0
     }
 
     // Transformation Value Base Parsing Function
-    fn parse_transformation(&mut self, node: &xmlpp::Element) -> Transformation {
+    fn parse_transformation(&mut self, node: &xmlpp::Element) -> i32 /* Transformation */ {
         0
     }
 
@@ -329,17 +328,17 @@ impl CanvasParser {
     }
 
     /// Width Point Value Base Parsing Function
-    fn parse_width_point(&mut self, node: &xmlpp::Element) -> WidthPoint {
+    fn parse_width_point(&mut self, node: &xmlpp::Element) -> i32 /* WidthPoint */ {
         0
     }
 
     // Dash Item Value Base Parsing Function
-    fn parse_dash_item(&mut self, node: &xmlpp::Element) -> DashItem {
+    fn parse_dash_item(&mut self, node: &xmlpp::Element) -> i32 /* DashItem */ {
         0
     }
 
     // Keyframe Parsing Function
-    fn parse_keyframe(&mut self, node: &xmlpp::Element, canvas: canvas::Handle) -> Keyframe {
+    fn parse_keyframe(&mut self, node: &xmlpp::Element, canvas: canvas::Handle) -> i32 /* Keyframe */ {
         0
     }
 
@@ -348,7 +347,7 @@ impl CanvasParser {
         &mut self,
         node: &xmlpp::Element,
         canvas: canvas::Handle,
-    ) -> etl::handle<ValueNode_Animated> {
+    ) -> i32 /* etl::handle<ValueNode_Animated> */ {
         0
     }
 
@@ -357,7 +356,7 @@ impl CanvasParser {
         &mut self,
         node: &xmlpp::Element,
         canvas: canvas::Handle,
-    ) -> etl::handle<LinkableValueNode> {
+    ) -> i32 /*etl::handle<LinkableValueNode>*/ {
         0
     }
 
@@ -366,7 +365,7 @@ impl CanvasParser {
         &mut self,
         node: &xmlpp::Element,
         canvas: canvas::Handle,
-    ) -> etl::handle<ValueNode_StaticList> {
+    ) -> i32 /* etl::handle<ValueNode_StaticList> */ {
         0
     }
 
@@ -375,12 +374,12 @@ impl CanvasParser {
         &mut self,
         node: &xmlpp::Element,
         canvas: canvas::Handle,
-    ) -> etl::handle<ValueNode_DynamicList> {
+    ) -> i32 /* etl::handle<ValueNode_DynamicList> */ {
         0
     }
 
     // Interpolation option for ValueBase parsing function
-    fn parse_interpolation(&mut self, node: &xmlpp::Element, attribute: String) -> Interpolation {
+    fn parse_interpolation(&mut self, node: &xmlpp::Element, attribute: String) -> i32 /* Interpolation */ {
         0
     }
 

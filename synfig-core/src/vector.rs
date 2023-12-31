@@ -1,8 +1,9 @@
 use std::ops::Sub;
 
+#[derive(Copy, Clone)]
 pub struct Vector {
-    x: f64,
-    y: f64,
+   pub x: f64,
+   pub y: f64,
 }
 
 pub type Point = Vector;

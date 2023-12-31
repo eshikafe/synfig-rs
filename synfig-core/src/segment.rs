@@ -1,6 +1,7 @@
 
 use crate::vector::{Vector, Point};
 
+#[derive(Copy, Clone)]
 pub struct Segment
 {
 	p1: Point,

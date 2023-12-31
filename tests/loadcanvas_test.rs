@@ -1,3 +1,4 @@
+
 use synfig_core::{loadcanvas::*, version::*};
 
 #[test]
