@@ -138,45 +138,45 @@ impl CanvasParser {
     // Returns canvas::Handle
     pub fn parse_from_file_as(&self, identifier: i32, abs_path: String, errors: String) -> i32 {
         // TODO: Implement this function
-        0
+        unimplemented!()
     }
 
     // Parse a Canvas from a xmlpp root node
     pub fn parse_as(&self, node: i32, errors: String) -> i32 {
         // TODO: Implement this function
-        0
+        unimplemented!()
     }
 
     // Error handling function
-    pub fn error(&mut self, element: xmlpp::Node, text: String) {
-        let err = format!(
+    pub fn error(&mut self, element: xmlpp::Node, text: &str) {
+        let err_str = format!(
             "{}:<{:?}>:{:?}: error: {}",
             self.filename, element, element, text
         );
         self.total_errors += 1;
+        self.errors_text = format!("{} * {}\n", self.errors_text, err_str);
         if self.allow_errors {
-            error!("{}", err);
+            error!("{}", err_str);
         }
     }
 
     // Fatal Error handling function
-    fn fatal_error(&self, element: i32, text: String) {
-        let err = format!(
+    fn fatal_error(&self, element: i32, text: &str) {
+        let err_str = format!(
             "{}:<{}>:{}: error: {}",
             self.filename, element, element, text
         );
-        error!("{}", err);
+        error!("{}", err_str);
     }
 
     // Warning handling function
-    pub fn warning(&mut self, element: i32, text: String) {
-        let msg = format!("{}:<{}>:{}: {}", self.filename, element, element, text);
-        warn!("{}", msg);
-
+    pub fn warning(&mut self, element: i32, text: &str) {
+        let warn_str = format!("{}:<{}>:{}: {}", self.filename, element, element, text);
+        warn!("{}", warn_str);
         self.total_warnings += 1;
-        self.warnings_text = format!("{} * {} \n", self.warnings_text, msg);
+        self.warnings_text = format!("{} * {}\n", self.warnings_text, warn_str);
         if self.total_warnings >= self.max_warnings {
-            self.fatal_error(element, "Too many warnings".to_string());
+            self.fatal_error(element, "Too many warnings");
         }
     }
 
@@ -329,17 +329,17 @@ impl CanvasParser {
 
     /// Width Point Value Base Parsing Function
     fn parse_width_point(&mut self, node: &xmlpp::Element) -> i32 /* WidthPoint */ {
-        0
+        unimplemented!()
     }
 
     // Dash Item Value Base Parsing Function
     fn parse_dash_item(&mut self, node: &xmlpp::Element) -> i32 /* DashItem */ {
-        0
+        unimplemented!()
     }
 
     // Keyframe Parsing Function
     fn parse_keyframe(&mut self, node: &xmlpp::Element, canvas: canvas::Handle) -> i32 /* Keyframe */ {
-        0
+        unimplemented!()
     }
 
     // ValueNode Animated Parsing Function
