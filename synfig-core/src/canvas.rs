@@ -29,7 +29,7 @@ pub struct Canvas {
 
 	// File identifier of Canvas
 	// see get_identifier(), set_identifier()
-	// identifier_FileSystem::Identifier,
+	// identifier_: FileSystem::Identifier,
 
 	// Metadata map for Canvas.
 	// see get_meta_data(), set_meta_data(), erase_meta_data()
@@ -37,7 +37,7 @@ pub struct Canvas {
 
 	// Contains a list of ValueNodes that are in this Canvas
 	//	see value_node_list(), find_value_node()
-	//  value_node_list_ValueNodeList,
+	//  value_node_list: ValueNodeList,
 
 	// Contains a list of Keyframes that are in the Canvas
 	// see keyframe_list()
@@ -46,7 +46,7 @@ pub struct Canvas {
 	// A handle to the parent canvas of this canvas.
 	//	If canvas is a root canvas, then this handle is empty
 	//	see parent()
-	// parent_LooseHandle,
+	// parent_: LooseHandle,
 
 	// List containing any child Canvases
 	//	see children() */
@@ -54,10 +54,10 @@ pub struct Canvas {
 
 	// Render Description for Canvas
 	//	see rend_desc() */
-	// RendDesc desc_;
+	// desc_: RendDesc,
 
 	// Contains the value of the last call to set_time()
-	// Time cur_time_;
+	// cur_time_: Time,
 
 	// Map of external Canvases used in this Canvas
 	// mutable std::map<String,Handle> externals_;

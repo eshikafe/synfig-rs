@@ -11,7 +11,6 @@ use lazy_static::lazy_static;
 use crate::canvas;
 use crate::color::*;
 use crate::valuenode;
-use crate::Real;
 use crate::time::Time;
 use crate::vector::*;
 use crate::segment::Segment;
@@ -28,6 +27,7 @@ lazy_static! {
     });
 }
 
+// TODO: Replace with a quick_xml crate
 mod xmlpp {
     #[derive(Debug)]
     pub struct Node;
@@ -36,12 +36,9 @@ mod xmlpp {
     pub struct Element;
 }
 
-/// CanvasParser handles xmlpp elements from a sif file and
-/// converts them into Synfig objects
+/// CanvasParser converts xml elements from a sif file to Synfig objects
 pub struct CanvasParser {
-    // Maximum number of allowed warnings before fatal error is thrown
     max_warnings: i32,
-    // Total number of warning during canvas parsing
     total_warnings: i32,
     total_errors: i32,
     allow_errors: bool,
@@ -49,7 +46,6 @@ pub struct CanvasParser {
     path: String,
     errors_text: String,
     warnings_text: String,
-    // Seems not to be used
     guid: GUID,
     in_bones_section: bool,
     // Set of absolute file names of the canvases currently being parsed
@@ -239,7 +235,7 @@ impl CanvasParser {
     }
 
     // Real Value Base Parsing Function
-    fn parse_real(&mut self, node: &xmlpp::Element) -> Real {
+    fn parse_real(&mut self, node: &xmlpp::Element) -> f64 {
         0.0
     }
 

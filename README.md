@@ -1,5 +1,5 @@
 [![Test](https://github.com/eshikafe/synfig-rs/actions/workflows/rust.yml/badge.svg?branch=main)](https://github.com/eshikafe/synfig-rs/actions/workflows/rust.yml)
 
-# synfig-core
+# synfig-rs
 
-The `synfig-core` crate is an implementation of [synfig-core](https://github.com/synfig/synfig/tree/master/synfig-core/src/synfig) in Rust.  
+`synfig-rs` is a Rust implementation of [synfig](https://github.com/synfig/synfig).
