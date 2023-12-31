@@ -2,6 +2,11 @@ use std::collections::HashMap;
 
 pub const CURRENT_CANVAS_VERSION: &str = "1.2";
 
+pub type Handle = i32;
+pub type LooseHandle = i32;
+pub type ConstHandle = i32;
+pub type Children = Vec<Handle>;
+
 pub struct Canvas {
     // Contains the ID string for the Canvas
 	//	see get_id(), set_id() 
@@ -81,9 +86,3 @@ pub struct Canvas {
 	outline_grow: f64,
 
 }
-
-pub type Handle = i32;
-pub type LooseHandle = i32;
-pub type ConstHandle = i32;
-
-pub type Children = Vec<Handle>;
