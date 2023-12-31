@@ -7,21 +7,36 @@ use log::{error, warn};
 use std::collections::HashMap;
 use std::sync::Mutex;
 
-use lazy_static::lazy_static;
 use crate::canvas;
 use crate::color::*;
-use crate::valuenode;
-use crate::time::Time;
-use crate::vector::*;
-use crate::segment::Segment;
 use crate::layer::*;
+use crate::segment::Segment;
+use crate::time::Time;
+use crate::valuenode;
+use crate::vector::*;
+use lazy_static::lazy_static;
+
+// Loads a canvas from current xmlpp Element
+// returns the Canvas's handle on success, an empty handle on failure
+pub fn open_canvas(node: &xmlpp::Element, errors: String, warnings: String) -> canvas::Handle {
+    unimplemented!()
+}
+
+// Loads a canvas from a filename and its absolute path
+// returns the Canvas's handle on success, an empty handle on failure
+pub fn open_canvas_as(
+    identifier: String, /* FileSystem::Identifier */
+    as_s: String,
+    errors: String,
+    warnings: String,
+) -> canvas::Handle {
+    unimplemented!()
+}
 
 // Returns the Open Canvases Map.
-// using OpenCanvasMap = std::map<Canvas::LooseHandle, std::string>;
 type OpenCanvasMap = HashMap<i32, String>;
-
 lazy_static! {
-    static ref OPEN_CANVAS_MAP: Mutex<OpenCanvasMap> = Mutex::new({
+    static ref GET_OPEN_CANVAS_MAP: Mutex<OpenCanvasMap> = Mutex::new({
         let open_canvas_map = HashMap::new();
         open_canvas_map
     });
@@ -123,12 +138,12 @@ impl CanvasParser {
     // `canvas` is the handle to the canvas to register
     // `abs_path` is the absolute path to the file that represents the canvas
     pub fn register_canvas_in_map(&self, canvas: i32, abs_path: String) {
-        OPEN_CANVAS_MAP.lock().unwrap().insert(canvas, abs_path);
+        GET_OPEN_CANVAS_MAP.lock().unwrap().insert(canvas, abs_path);
     }
 
     pub fn show_canvas_map(&self, file: String, line: i32, text: String) {
         println!("  .-----\n  |  {}:{} {}", file, line, text);
-        for (key, val) in OPEN_CANVAS_MAP.lock().unwrap().iter() {
+        for (key, val) in GET_OPEN_CANVAS_MAP.lock().unwrap().iter() {
             println!("  |    {:>40} : {} ({})\n", val, key, "");
         }
         println!("  `-----\n");
@@ -196,7 +211,7 @@ impl CanvasParser {
         // inline_ = false;
         // identifier = = FileSystemNative::instance()->get_identifier(std::string());
         // path = String::from(".");
-        0 
+        0
     }
 
     // Canvas definitions Parsing Function (exported value nodes and exported canvases)
@@ -213,14 +228,18 @@ impl CanvasParser {
     // Layer Parsing Function
     // todo -> etl::handle<Layer>
     fn parse_layer(&mut self, node: &xmlpp::Element, canvas: canvas::Handle) -> Vec<Layer> {
-        vec![Layer{active: false, optimized: false, exclude_from_rendering: false,
+        vec![Layer {
+            active: false,
+            optimized: false,
+            exclude_from_rendering: false,
             description: String::from(""),
             group: String::from(""),
         }]
     }
 
     // Generic Value Base Parsing Function
-    fn parse_value(&mut self, node: &xmlpp::Element, canvas: canvas::Handle) -> i32 /* ValueBase */ {
+    fn parse_value(&mut self, node: &xmlpp::Element, canvas: canvas::Handle) -> i32 /* ValueBase */
+    {
         0
     }
 
@@ -228,7 +247,7 @@ impl CanvasParser {
     fn parse_value_node(
         &mut self,
         node: &xmlpp::Element,
-        canvas: canvas::Handle
+        canvas: canvas::Handle,
     ) -> valuenode::Handle {
         0
     }
@@ -250,7 +269,7 @@ impl CanvasParser {
 
     // Vector Value Base Parsing Function
     fn parse_vector(&mut self, node: &xmlpp::Element) -> Vector {
-        Vector{x: 0.0, y:0.0}
+        Vector { x: 0.0, y: 0.0 }
     }
 
     // Color Value Base Parsing Function
@@ -302,7 +321,7 @@ impl CanvasParser {
     fn parse_pair(
         &mut self,
         node: &xmlpp::Element,
-       // _type: &types_namespace::TypePairBase,
+        // _type: &types_namespace::TypePairBase,
         canvas: canvas::Handle,
     ) -> i32 /* ValueBase */ {
         0
@@ -338,48 +357,38 @@ impl CanvasParser {
     }
 
     // Keyframe Parsing Function
-    fn parse_keyframe(&mut self, node: &xmlpp::Element, canvas: canvas::Handle) -> i32 /* Keyframe */ {
+    fn parse_keyframe(&mut self, node: &xmlpp::Element, canvas: canvas::Handle) -> i32 /* Keyframe */
+    {
         unimplemented!()
     }
 
     // ValueNode Animated Parsing Function
-    fn parse_animated(
-        &mut self,
-        node: &xmlpp::Element,
-        canvas: canvas::Handle,
-    ) -> i32 /* etl::handle<ValueNode_Animated> */ {
+    fn parse_animated(&mut self, node: &xmlpp::Element, canvas: canvas::Handle) -> i32 /* etl::handle<ValueNode_Animated> */
+    {
         0
     }
 
     // Linkable ValueNode Parsing Function
-    fn parse_linkable_value_node(
-        &mut self,
-        node: &xmlpp::Element,
-        canvas: canvas::Handle,
-    ) -> i32 /*etl::handle<LinkableValueNode>*/ {
+    fn parse_linkable_value_node(&mut self, node: &xmlpp::Element, canvas: canvas::Handle) -> i32 /*etl::handle<LinkableValueNode>*/
+    {
         0
     }
 
     // Static List Parsnig Function
-    fn parse_static_list(
-        &mut self,
-        node: &xmlpp::Element,
-        canvas: canvas::Handle,
-    ) -> i32 /* etl::handle<ValueNode_StaticList> */ {
+    fn parse_static_list(&mut self, node: &xmlpp::Element, canvas: canvas::Handle) -> i32 /* etl::handle<ValueNode_StaticList> */
+    {
         0
     }
 
     // Dynamic List Parsnig Function
-    fn parse_dynamic_list(
-        &mut self,
-        node: &xmlpp::Element,
-        canvas: canvas::Handle,
-    ) -> i32 /* etl::handle<ValueNode_DynamicList> */ {
+    fn parse_dynamic_list(&mut self, node: &xmlpp::Element, canvas: canvas::Handle) -> i32 /* etl::handle<ValueNode_DynamicList> */
+    {
         0
     }
 
     // Interpolation option for ValueBase parsing function
-    fn parse_interpolation(&mut self, node: &xmlpp::Element, attribute: String) -> i32 /* Interpolation */ {
+    fn parse_interpolation(&mut self, node: &xmlpp::Element, attribute: String) -> i32 /* Interpolation */
+    {
         0
     }
 
