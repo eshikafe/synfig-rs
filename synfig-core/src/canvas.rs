@@ -1,13 +1,19 @@
 use std::collections::HashMap;
+// use std::path::Path;
+use crate::layer::Layer;
+use crate::filesystem;
 
 pub const CURRENT_CANVAS_VERSION: &str = "1.2";
 
-pub type Handle = i32;
+// pub type Handle = i32;
 pub type LooseHandle = i32;
 pub type ConstHandle = i32;
-pub type Children = Vec<Handle>;
+pub type Children = Vec<i32>;
 
+
+#[derive(Default)]
 pub struct Canvas {
+	pub handle: Box<Canvas>,
     // Contains the ID string for the Canvas
 	//	see get_id(), set_id() 
 	id_: String,
@@ -84,5 +90,31 @@ pub struct Canvas {
 	// Value to store temporarily the grow value for the child outline type layers
 	// \see get_grow_value set_grow_value */
 	outline_grow: f64,
+}
 
+impl Canvas {
+    pub fn create() -> Box<Canvas> {
+        // Implementation for creating a new Canvas
+        Box::new(Canvas {
+            handle: Box::new(Canvas::create()), // Adjust this line based on your actual implementation
+			..Default::default()
+        })
+    }
+
+    pub fn push_back(&mut self, layer: Box<Layer>) {
+        // Implementation for adding a layer to the canvas
+        // Adjust this based on your actual implementation
+		unimplemented!();
+    }
+
+    pub fn set_identifier(&mut self, identifier: filesystem::Identifier) {
+        // Implementation for setting the identifier of the canvas
+        // Adjust this based on your actual implementation
+		unimplemented!();
+    }
+
+    pub fn set_file_name(&mut self, filename: String) {
+        // Implementation for setting the file name of the canvas
+        // Adjust this based on your actual implementation
+    }
 }
