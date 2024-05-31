@@ -8,6 +8,7 @@ pub mod version;
 pub mod uniqueid;
 pub mod widthpoint;
 pub mod valuenode;
+pub mod filesystem;
 
 pub mod time;
 pub mod segment;
