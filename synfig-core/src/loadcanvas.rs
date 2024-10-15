@@ -34,7 +34,8 @@ pub fn open_canvas_as(
 ) -> Option<Box<Canvas>> {
     let filename = filesystem::fix_slashes(as_);
 
-	if CanvasParser::loading.contains(&identifier)
+	//if CanvasParser::loading.contains(&identifier)
+    if identifier.filename.is_empty()
 	{
 		let warning = format!("cannot load '{}' recursively", identifier.filename.as_str());
 		warn!("{}", warning);
@@ -51,7 +52,8 @@ pub fn open_canvas_as(
     let mut canvas: Box<Canvas>;
     let mut parser = CanvasParser::new();
 
-    Some(canvas)
+    // Some(canvas)
+    None
 }
 
 // Returns the Open Canvases Map.

@@ -96,7 +96,7 @@ impl Canvas {
     pub fn create() -> Box<Canvas> {
         // Implementation for creating a new Canvas
         Box::new(Canvas {
-            handle: Box::new(Canvas::create()), // Adjust this line based on your actual implementation
+           // handle: Box::new(Canvas::create()), // Adjust this line based on your actual implementation
 			..Default::default()
         })
     }
