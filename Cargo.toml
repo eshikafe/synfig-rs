@@ -1,16 +1,4 @@
-[package]
-name = "synfig-rs"
-version = "0.1.0"
-edition = "2021"
-license = "GPLv3"
-keywords = ["animation", "vector-graphics", "2d"]
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
 [workspace]
-members = ["synfig-core"]
+members = ["synfig-core", "synfig-gui"]
 
-[dependencies]
-synfig-core = {path = "synfig-core", version = "0.1.0"}
-log = "0.4.17"
 
