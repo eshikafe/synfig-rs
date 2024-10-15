@@ -11,7 +11,7 @@ use std::sync::Mutex;
 use crate::canvas::*;
 use crate::color::*;
 use crate::layer::*;
-use crate::segment::Segment;
+// use crate::segment::Segment;
 use crate::time::Time;
 use crate::valuenode;
 use crate::vector::*;
@@ -26,35 +26,35 @@ pub fn open_canvas(node: &xmlpp::Element, errors: String, warnings: String) -> B
 
 // Loads a canvas from a filename and its absolute path
 // returns the Canvas's handle on success, an None on failure
-pub fn open_canvas_as(
-    identifier: filesystem::Identifier,
-    as_: String,
-    errors: String,
-    warnings: String,
-) -> Option<Box<Canvas>> {
-    let filename = filesystem::fix_slashes(as_);
+// pub fn open_canvas_as(
+//     identifier: filesystem::Identifier,
+//     as_: String,
+//     errors: String,
+//     warnings: String,
+// ) -> Option<Box<Canvas>> {
+//     let filename = filesystem::fix_slashes(as_);
 
-	//if CanvasParser::loading.contains(&identifier)
-    if identifier.filename.is_empty()
-	{
-		let warning = format!("cannot load '{}' recursively", identifier.filename.as_str());
-		warn!("{}", warning);
-		let warnings = format!("  * {}\n", warning);
-        let mut canvas = Canvas::create();
-		canvas.set_identifier(identifier);
-		canvas.set_file_name(filename);
-	// 	Layer::Handle paste(Layer_Group::create());
-	// 	canvas->push_back(paste);
-	// 	paste->set_description(warning);
-		return Some(canvas);
-	}
+// 	//if CanvasParser::loading.contains(&identifier)
+//     if identifier.filename.is_empty()
+// 	{
+// 		let warning = format!("cannot load '{}' recursively", identifier.filename.as_str());
+// 		warn!("{}", warning);
+// 		let warnings = format!("  * {}\n", warning);
+//         let mut canvas = Canvas::create();
+// 		canvas.set_identifier(identifier);
+// 		canvas.set_file_name(filename);
+// 	// 	Layer::Handle paste(Layer_Group::create());
+// 	// 	canvas->push_back(paste);
+// 	// 	paste->set_description(warning);
+// 		return Some(canvas);
+// 	}
 
-    let mut canvas: Box<Canvas>;
-    let mut parser = CanvasParser::new();
+//     let mut canvas: Box<Canvas>;
+//     //let mut parser = CanvasParser::new();
 
-    // Some(canvas)
-    None
-}
+//     // Some(canvas)
+//     None
+// }
 
 // Returns the Open Canvases Map.
 type OpenCanvasMap = HashMap<i32, String>;
@@ -99,7 +99,13 @@ impl Default for CanvasParser {
             total_warnings: 0,
             total_errors: 0,
             allow_errors: false,
-            ..Default::default()
+            filename: Default::default(),
+            path: Default::default(),
+            errors_text: Default::default(),
+            warnings_text: Default::default(),
+            guid: Default::default(),
+            in_bones_section: false,
+            loading: Default::default(),
         }
     }
 }
