@@ -7,3 +7,4 @@ keywords = ["animation", "vector-graphics", "2d"]
 
 [dependencies]
 synfig-core = {path = "../synfig-core"}
+eframe = "0.29.1"

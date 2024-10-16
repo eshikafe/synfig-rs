@@ -17,7 +17,7 @@ use crate::vector::Vector;
 //	revision release.
 //
 
-pub const SYNFIG_VERSION: &str = "01.04.00";
+pub const SYNFIG_VERSION: &str = env!("CARGO_PKG_VERSION");
 
 // Increment this value whenever
 // the library changes in a way
