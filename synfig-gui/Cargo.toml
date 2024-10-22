@@ -8,3 +8,5 @@ keywords = ["animation", "vector-graphics", "2d"]
 [dependencies]
 synfig-core = {path = "../synfig-core"}
 eframe = "0.29.1"
+egui_extras = { version = "*", features = ["all_loaders"] }
+image = { version = "0.25", features = ["png"] } # Add the types you want support for
