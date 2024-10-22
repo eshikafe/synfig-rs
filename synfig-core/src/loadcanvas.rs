@@ -1,11 +1,13 @@
 #![allow(dead_code)]
 #![allow(unused_variables)]
 
+// Implementation for the Synfig Canvas Loader (canvas file parser)
+
 // use crate::lazy_static::lazy_static;
 use guid_create::GUID;
 use log::{error, warn};
 use std::collections::HashMap;
-use std::collections::HashSet;
+use std::collections::BTreeSet;
 use std::sync::Mutex;
 
 use crate::canvas::*;
@@ -18,43 +20,6 @@ use crate::vector::*;
 use crate::filesystem;
 use lazy_static::lazy_static;
 
-// Loads a canvas from current xmlpp Element
-// returns the Canvas's handle on success, an empty handle on failure
-pub fn open_canvas(node: &xmlpp::Element, errors: String, warnings: String) -> Box<Canvas> {
-    unimplemented!()
-}
-
-// Loads a canvas from a filename and its absolute path
-// returns the Canvas's handle on success, an None on failure
-pub fn open_canvas_as(
-    identifier: filesystem::Identifier,
-    as_: String,
-    errors: String,
-    warnings: String,
-) -> Option<Box<Canvas>> {
-    let filename = filesystem::fix_slashes(as_);
-
-	//if CanvasParser::loading.contains(&identifier)
-    if identifier.filename.is_empty()
-	{
-		let warning = format!("cannot load '{}' recursively", identifier.filename.as_str());
-		warn!("{}", warning);
-		let warnings = format!("  * {}\n", warning);
-        let mut canvas = Canvas::create();
-		canvas.set_identifier(identifier);
-		canvas.set_file_name(filename);
-	// 	Layer::Handle paste(Layer_Group::create());
-	// 	canvas->push_back(paste);
-	// 	paste->set_description(warning);
-		return Some(canvas);
-	}
-
-    let mut canvas: Box<Canvas>;
-    //let mut parser = CanvasParser::new();
-
-    // Some(canvas)
-    None
-}
 
 // Returns the Open Canvases Map.
 type OpenCanvasMap = HashMap<i32, String>;
@@ -73,7 +38,8 @@ mod xmlpp {
     pub struct Element;
 }
 
-/// CanvasParser converts xml elements from a sif file to Synfig objects
+/// CanvasParser 
+/// Handles xml elements from a sif file to Synfig objects
 pub struct CanvasParser {
     max_warnings: i32,
     total_warnings: i32,
@@ -87,9 +53,7 @@ pub struct CanvasParser {
     in_bones_section: bool,
 
     // Set of absolute file names of the canvases currently being parsed
-    // static std::set<FileSystem::Identifier> loading_;
-    // use std::collections::HashSet;
-    pub loading: HashSet<i32>,
+    pub loading: BTreeSet<i32>,
 }
 
 impl Default for CanvasParser {
@@ -424,4 +388,43 @@ impl CanvasParser {
     fn parse_static(&mut self, node: &xmlpp::Element) -> bool {
         false
     }
+}
+
+
+// Loads a canvas from current xmlpp Element
+// returns the Canvas's handle on success, an empty handle on failure
+pub fn open_canvas(node: &xmlpp::Element, errors: String, warnings: String) -> Box<Canvas> {
+    unimplemented!()
+}
+
+// Loads a canvas from a filename and its absolute path
+// returns the Canvas's handle on success, an None on failure
+pub fn open_canvas_as(
+    identifier: filesystem::Identifier,
+    as_: String,
+    errors: String,
+    warnings: String,
+) -> Option<Box<Canvas>> {
+    let filename = filesystem::fix_slashes(as_);
+
+	//if CanvasParser::loading.contains(&identifier)
+    if identifier.filename.is_empty()
+	{
+		let warning = format!("cannot load '{}' recursively", identifier.filename.as_str());
+		warn!("{}", warning);
+		let warnings = format!("  * {}\n", warning);
+        let mut canvas = Canvas::create();
+		canvas.set_identifier(identifier);
+		canvas.set_file_name(filename);
+	// 	Layer::Handle paste(Layer_Group::create());
+	// 	canvas->push_back(paste);
+	// 	paste->set_description(warning);
+		return Some(canvas);
+	}
+
+    let mut canvas: Box<Canvas>;
+    //let mut parser = CanvasParser::new();
+
+    // Some(canvas)
+    None
 }
