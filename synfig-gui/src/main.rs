@@ -5,7 +5,7 @@ use egui_extras;
 fn main() {
     let native_options = eframe::NativeOptions::default();
     let _ = eframe::run_native(
-        "Synfig-rs Studio",
+        "Synfig[rs] Studio",
         native_options,
         Box::new(|cc| Ok(Box::new(SynfigStudio::new(cc)))),
     );
